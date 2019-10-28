@@ -1,6 +1,6 @@
 using System;
 
-namespace seniorProject.Models
+namespace TRAILES.Models
 {
     public class ErrorViewModel
     {
