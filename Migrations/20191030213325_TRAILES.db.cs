@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TRAILES.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class TRAILESdb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,7 +16,8 @@ namespace TRAILES.Migrations
                     Name = table.Column<string>(nullable: true),
                     AddDate = table.Column<DateTime>(nullable: false),
                     Gender = table.Column<string>(nullable: true),
-                    BedCount = table.Column<int>(nullable: false)
+                    BedCount = table.Column<int>(nullable: false),
+                    BedsFilled = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

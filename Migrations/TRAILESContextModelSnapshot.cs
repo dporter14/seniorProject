@@ -28,6 +28,9 @@ namespace TRAILES.Migrations
                     b.Property<int>("BedCount")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("BedsFilled")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Gender")
                         .HasColumnType("TEXT");
 

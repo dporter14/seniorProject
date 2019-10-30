@@ -9,8 +9,8 @@ using TRAILES.Data;
 namespace TRAILES.Migrations
 {
     [DbContext(typeof(TRAILESContext))]
-    [Migration("20191023173209_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20191030213325_TRAILES.db")]
+    partial class TRAILESdb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,6 +28,9 @@ namespace TRAILES.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<int>("BedCount")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("BedsFilled")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Gender")

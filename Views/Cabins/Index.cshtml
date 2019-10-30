@@ -36,7 +36,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Cabins[0].BedCount)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cabins[0].BedsFilled)
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -53,6 +55,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.BedCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BedsFilled)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

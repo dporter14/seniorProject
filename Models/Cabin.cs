@@ -15,5 +15,7 @@ namespace TRAILES.Models
         public string Gender {get; set;}
         [Display(Name = "Bed Count")]
         public int BedCount {get; set;}
+        [Display(Name = "Beds Filled")]
+        public int BedsFilled {get; set;}
     }
 }
