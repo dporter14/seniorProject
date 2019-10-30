@@ -20,8 +20,12 @@ namespace TRAILES.Controllers
         }
 
         // GET: Cabins
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Index(string cabinGender, string searchString)
         {
+            IQueryable<string> genderQuery = from m in _context.Cabin
+                                                orderby m.Gender
+                                                select m.Gender;
+
             var cabins = from m in _context.Cabin
                             select m;
             
@@ -29,7 +33,18 @@ namespace TRAILES.Controllers
             {
                 cabins = cabins.Where(s => s.Name.Contains(searchString));
             }
-            return View(await cabins.ToListAsync());
+
+            if (!string.IsNullOrEmpty(cabinGender))
+            {
+                cabins = cabins.Where(x => x.Gender == cabinGender);
+            }
+            var cabinGenderVM = new CabinGenderViewModel
+            {
+                Genders = new SelectList(await genderQuery.Distinct().ToListAsync()),
+                Cabins = await cabins.ToListAsync()
+            };
+
+            return View(cabinGenderVM);
         }
 
         // GET: Cabins/Details/5

@@ -1,34 +1,46 @@
-@model IEnumerable<TRAILES.Models.Cabin>
+@model TRAILES.Models.CabinGenderViewModel
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Cabin List</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<form asp-controller="Cabins" asp-action="Index" method="get">
+    <p>
+
+        <select asp-for="CabinGender" asp-items="Model.Genders">
+            <option value="">All</option>
+        </select>
+
+        Cabin Name: <input type="text" asp-for="SearchString">
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(model => model.Cabins[0].Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AddDate)
+                @Html.DisplayNameFor(model => model.Cabins[0].AddDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Gender)
+                @Html.DisplayNameFor(model => model.Cabins[0].Gender)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BedCount)
+                @Html.DisplayNameFor(model => model.Cabins[0].BedCount)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Cabins) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
