@@ -65,6 +65,9 @@ namespace TRAILES.Migrations
                         .HasColumnType("TEXT")
                         .HasMaxLength(10);
 
+                    b.Property<int>("GradeLevel")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool>("IsAdmin")
                         .HasColumnType("INTEGER");
 

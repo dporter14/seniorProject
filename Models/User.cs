@@ -23,6 +23,12 @@ namespace TRAILES.Models
         [StringLength(10)]
         public string Gender {get; set;}
 
+        // 13 == not a student
+        [Range(9,13)]
+        [Required]
+        [Display(Name = "Grade Level")]
+        public int GradeLevel {get; set;} 
+        [Required]
         public bool IsAdmin {get; set;} = false;
         
         public int CabinId {get; set;}

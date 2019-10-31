@@ -33,6 +33,7 @@ namespace TRAILES.Migrations
                     FName = table.Column<string>(maxLength: 255, nullable: false),
                     LName = table.Column<string>(maxLength: 255, nullable: false),
                     Gender = table.Column<string>(maxLength: 10, nullable: false),
+                    GradeLevel = table.Column<int>(nullable: false),
                     IsAdmin = table.Column<bool>(nullable: false),
                     CabinId = table.Column<int>(nullable: false)
                 },

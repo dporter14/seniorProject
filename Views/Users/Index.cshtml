@@ -18,11 +18,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.LName)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GradeLevel)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Cabin)
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -33,6 +34,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.LName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GradeLevel)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Cabin.Name)

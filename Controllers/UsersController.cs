@@ -48,7 +48,7 @@ namespace TRAILES.Controllers
         // GET: Users/Create
         public IActionResult Create()
         {
-            ViewData["CabinId"] = new SelectList(_context.Cabin, "CabinId", "Gender");
+            ViewData["CabinId"] = new SelectList(_context.Cabin, "CabinId", "Name");
             return View();
         }
 
@@ -57,7 +57,7 @@ namespace TRAILES.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserId,FName,LName,Gender,IsAdmin,CabinId")] User user)
+        public async Task<IActionResult> Create([Bind("UserId,FName,LName,Gender,GradeLevel,IsAdmin,CabinId")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +65,7 @@ namespace TRAILES.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CabinId"] = new SelectList(_context.Cabin, "CabinId", "Gender", user.CabinId);
+            ViewData["CabinId"] = new SelectList(_context.Cabin, "CabinId", "Name", user.CabinId);
             return View(user);
         }
 
@@ -82,7 +82,7 @@ namespace TRAILES.Controllers
             {
                 return NotFound();
             }
-            ViewData["CabinId"] = new SelectList(_context.Cabin, "CabinId", "Gender", user.CabinId);
+            ViewData["CabinId"] = new SelectList(_context.Cabin, "CabinId", "Name", user.CabinId);
             return View(user);
         }
 
@@ -91,7 +91,7 @@ namespace TRAILES.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UserId,FName,LName,Gender,IsAdmin,CabinId")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("UserId,FName,LName,Gender,GradeLevel,IsAdmin,CabinId")] User user)
         {
             if (id != user.UserId)
             {
@@ -118,7 +118,7 @@ namespace TRAILES.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CabinId"] = new SelectList(_context.Cabin, "CabinId", "Gender", user.CabinId);
+            ViewData["CabinId"] = new SelectList(_context.Cabin, "CabinId", "Name", user.CabinId);
             return View(user);
         }
 

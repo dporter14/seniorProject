@@ -9,7 +9,7 @@ using TRAILES.Data;
 namespace TRAILES.Migrations
 {
     [DbContext(typeof(TRAILESContext))]
-    [Migration("20191031043715_InitialCreate")]
+    [Migration("20191031184959_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -66,6 +66,9 @@ namespace TRAILES.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT")
                         .HasMaxLength(10);
+
+                    b.Property<int>("GradeLevel")
+                        .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsAdmin")
                         .HasColumnType("INTEGER");
