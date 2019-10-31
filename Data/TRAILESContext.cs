@@ -7,9 +7,20 @@ namespace TRAILES.Data
     {
         public TRAILESContext (DbContextOptions<TRAILESContext> options)
             : base(options)
-            {
-            }
+        {
+        }
 
-            public DbSet<Cabin> Cabin {get; set;}
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>()
+                .HasOne<Cabin>(s => s.Cabin)
+                .WithMany(g => g.Users)
+                .HasForeignKey(s => s.CabinId)
+                .OnDelete(DeleteBehavior.SetNull);
+        }
+
+        public DbSet<Cabin> Cabin {get; set;}
+
+        public DbSet<User> User {get; set;}
     }
 }

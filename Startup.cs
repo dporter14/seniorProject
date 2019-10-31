@@ -8,8 +8,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using TRAILES.Data;
 using Microsoft.EntityFrameworkCore;
+using TRAILES.Data;
 
 namespace TRAILES
 {
