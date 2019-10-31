@@ -10,44 +10,23 @@ using TRAILES.Models;
 
 namespace TRAILES.Controllers
 {
-    public class CabinsController : Controller
+    public class UsersController : Controller
     {
         private readonly TRAILESContext _context;
 
-        public CabinsController(TRAILESContext context)
+        public UsersController(TRAILESContext context)
         {
             _context = context;
         }
 
-        // GET: Cabins
-        public async Task<IActionResult> Index(string cabinGender, string searchString)
+        // GET: Users
+        public async Task<IActionResult> Index()
         {
-            IQueryable<string> genderQuery = from m in _context.Cabin
-                                                orderby m.Gender
-                                                select m.Gender;
-
-            var cabins = from m in _context.Cabin
-                            select m;
-            
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                cabins = cabins.Where(s => s.Name.Contains(searchString));
-            }
-
-            if (!string.IsNullOrEmpty(cabinGender))
-            {
-                cabins = cabins.Where(x => x.Gender == cabinGender);
-            }
-            var cabinGenderVM = new CabinGenderViewModel
-            {
-                Genders = new SelectList(await genderQuery.Distinct().ToListAsync()),
-                Cabins = await cabins.ToListAsync()
-            };
-
-            return View(cabinGenderVM);
+            var tRAILESContext = _context.User.Include(u => u.Cabin);
+            return View(await tRAILESContext.ToListAsync());
         }
 
-        // GET: Cabins/Details/5
+        // GET: Users/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -55,39 +34,42 @@ namespace TRAILES.Controllers
                 return NotFound();
             }
 
-            var cabin = await _context.Cabin
-                .FirstOrDefaultAsync(m => m.CabinId == id);
-            if (cabin == null)
+            var user = await _context.User
+                .Include(u => u.Cabin)
+                .FirstOrDefaultAsync(m => m.UserId == id);
+            if (user == null)
             {
                 return NotFound();
             }
 
-            return View(cabin);
+            return View(user);
         }
 
-        // GET: Cabins/Create
+        // GET: Users/Create
         public IActionResult Create()
         {
+            ViewData["CabinId"] = new SelectList(_context.Cabin, "CabinId", "Gender");
             return View();
         }
 
-        // POST: Cabins/Create
+        // POST: Users/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CabinId,Name,AddDate,Gender,BedCount,BedsFilled")] Cabin cabin)
+        public async Task<IActionResult> Create([Bind("UserId,FName,LName,Gender,IsAdmin,CabinId")] User user)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(cabin);
+                _context.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(cabin);
+            ViewData["CabinId"] = new SelectList(_context.Cabin, "CabinId", "Gender", user.CabinId);
+            return View(user);
         }
 
-        // GET: Cabins/Edit/5
+        // GET: Users/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -95,22 +77,23 @@ namespace TRAILES.Controllers
                 return NotFound();
             }
 
-            var cabin = await _context.Cabin.FindAsync(id);
-            if (cabin == null)
+            var user = await _context.User.FindAsync(id);
+            if (user == null)
             {
                 return NotFound();
             }
-            return View(cabin);
+            ViewData["CabinId"] = new SelectList(_context.Cabin, "CabinId", "Gender", user.CabinId);
+            return View(user);
         }
 
-        // POST: Cabins/Edit/5
+        // POST: Users/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,AddDate,Gender,BedCount,BedsFilled")] Cabin cabin)
+        public async Task<IActionResult> Edit(int id, [Bind("UserId,FName,LName,Gender,IsAdmin,CabinId")] User user)
         {
-            if (id != cabin.CabinId)
+            if (id != user.UserId)
             {
                 return NotFound();
             }
@@ -119,12 +102,12 @@ namespace TRAILES.Controllers
             {
                 try
                 {
-                    _context.Update(cabin);
+                    _context.Update(user);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CabinExists(cabin.CabinId))
+                    if (!UserExists(user.UserId))
                     {
                         return NotFound();
                     }
@@ -135,10 +118,11 @@ namespace TRAILES.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(cabin);
+            ViewData["CabinId"] = new SelectList(_context.Cabin, "CabinId", "Gender", user.CabinId);
+            return View(user);
         }
 
-        // GET: Cabins/Delete/5
+        // GET: Users/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -146,30 +130,31 @@ namespace TRAILES.Controllers
                 return NotFound();
             }
 
-            var cabin = await _context.Cabin
-                .FirstOrDefaultAsync(m => m.CabinId == id);
-            if (cabin == null)
+            var user = await _context.User
+                .Include(u => u.Cabin)
+                .FirstOrDefaultAsync(m => m.UserId == id);
+            if (user == null)
             {
                 return NotFound();
             }
 
-            return View(cabin);
+            return View(user);
         }
 
-        // POST: Cabins/Delete/5
+        // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var cabin = await _context.Cabin.FindAsync(id);
-            _context.Cabin.Remove(cabin);
+            var user = await _context.User.FindAsync(id);
+            _context.User.Remove(user);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CabinExists(int id)
+        private bool UserExists(int id)
         {
-            return _context.Cabin.Any(e => e.CabinId == id);
+            return _context.User.Any(e => e.UserId == id);
         }
     }
 }

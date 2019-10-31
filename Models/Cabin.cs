@@ -1,12 +1,13 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections.Generic;
 
 namespace TRAILES.Models
 {
     public class Cabin
     {
-        public int Id {get; set;}
+        public int CabinId {get; set;}
 
         [StringLength(60, MinimumLength = 3)]
         [Required]
@@ -28,5 +29,7 @@ namespace TRAILES.Models
         [Display(Name = "Beds Filled")]
         [Range(0,30)]
         public int BedsFilled {get; set;} = 0;
+
+        public IList<User> Users {get; set;}
     }
 }
