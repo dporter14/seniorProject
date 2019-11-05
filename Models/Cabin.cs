@@ -22,13 +22,13 @@ namespace TRAILES.Models
         [StringLength(10)]
         public string Gender {get; set;}
 
-        [Range(1,30)]
+        [Range(1,System.Int32.MaxValue)]
         [Display(Name = "Bed Count")]
         public int BedCount {get; set;}
 
         [Display(Name = "Beds Filled")]
         [Range(0,30)]
-        public int BedsFilled {get; set;} = 0;
+        public int BedsFilled {get; set;} = 1;
 
         public IList<User> Users {get; set;}
     }

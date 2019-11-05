@@ -22,9 +22,9 @@ namespace TRAILES.Models
                 context.Cabin.AddRange(
                     new Cabin
                     {
-                        Name = "Everest #101",
-                        Gender = "Male",
-                        BedCount = 9
+                        Name = "Not Assigned",
+                        Gender = "n",
+                        BedCount = Int32.MaxValue
                     },
                     new Cabin
                     {

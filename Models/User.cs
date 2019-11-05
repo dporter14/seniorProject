@@ -31,7 +31,7 @@ namespace TRAILES.Models
         [Required]
         public bool IsAdmin {get; set;} = false;
         
-        public int CabinId {get; set;}
+        public int CabinId {get; set;} = 1;
         public Cabin Cabin {get; set;}
     }
 }
