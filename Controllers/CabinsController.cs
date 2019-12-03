@@ -20,31 +20,9 @@ namespace TRAILES.Controllers
         }
 
         // GET: Cabins
-        public async Task<IActionResult> Index(string cabinGender, string searchString)
+        public async Task<IActionResult> Index()
         {
-            IQueryable<string> genderQuery = from m in _context.Cabin
-                                                orderby m.Gender
-                                                select m.Gender;
-
-            var cabins = from m in _context.Cabin
-                            select m;
-            
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                cabins = cabins.Where(s => s.Name.Contains(searchString));
-            }
-
-            if (!string.IsNullOrEmpty(cabinGender))
-            {
-                cabins = cabins.Where(x => x.Gender == cabinGender);
-            }
-            var cabinGenderVM = new CabinGenderViewModel
-            {
-                Genders = new SelectList(await genderQuery.Distinct().ToListAsync()),
-                Cabins = await cabins.ToListAsync()
-            };
-
-            return View(cabinGenderVM);
+            return View(await _context.Cabin.ToListAsync());
         }
 
         // GET: Cabins/Details/5
@@ -56,7 +34,7 @@ namespace TRAILES.Controllers
             }
 
             var cabin = await _context.Cabin
-                .FirstOrDefaultAsync(m => m.CabinId == id);
+                .FirstOrDefaultAsync(m => m.ID == id);
             if (cabin == null)
             {
                 return NotFound();
@@ -76,7 +54,7 @@ namespace TRAILES.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CabinId,Name,AddDate,Gender,BedCount,BedsFilled")] Cabin cabin)
+        public async Task<IActionResult> Create([Bind("ID,Name,Gender,BedCount,BedsFilled")] Cabin cabin)
         {
             if (ModelState.IsValid)
             {
@@ -108,9 +86,9 @@ namespace TRAILES.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,AddDate,Gender,BedCount,BedsFilled")] Cabin cabin)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Gender,BedCount,BedsFilled")] Cabin cabin)
         {
-            if (id != cabin.CabinId)
+            if (id != cabin.ID)
             {
                 return NotFound();
             }
@@ -124,7 +102,7 @@ namespace TRAILES.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CabinExists(cabin.CabinId))
+                    if (!CabinExists(cabin.ID))
                     {
                         return NotFound();
                     }
@@ -147,7 +125,7 @@ namespace TRAILES.Controllers
             }
 
             var cabin = await _context.Cabin
-                .FirstOrDefaultAsync(m => m.CabinId == id);
+                .FirstOrDefaultAsync(m => m.ID == id);
             if (cabin == null)
             {
                 return NotFound();
@@ -169,7 +147,7 @@ namespace TRAILES.Controllers
 
         private bool CabinExists(int id)
         {
-            return _context.Cabin.Any(e => e.CabinId == id);
+            return _context.Cabin.Any(e => e.ID == id);
         }
     }
 }

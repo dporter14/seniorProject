@@ -27,8 +27,8 @@ namespace TRAILES
         {
             services.AddControllersWithViews();
 
-            services.AddDbContext<TRAILESContext>(options =>
-                options.UseSqlite(Configuration.GetConnectionString("TRAILESContext")));
+            services.AddDbContext<TRAILESContext>(options => 
+                    options.UseSqlite(Configuration.GetConnectionString("TRAILESContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
