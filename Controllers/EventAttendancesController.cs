@@ -49,8 +49,8 @@ namespace TRAILES.Controllers
         // GET: EventAttendances/Create
         public IActionResult Create()
         {
-            ViewData["EventID"] = new SelectList(_context.Event, "ID", "ID");
-            ViewData["StudentID"] = new SelectList(_context.Student, "ID", "ID");
+            ViewData["EventID"] = new SelectList(_context.Event, "ID", "Name");
+            ViewData["StudentID"] = new SelectList(_context.Student, "ID", "LastName");
             return View();
         }
 
@@ -67,8 +67,8 @@ namespace TRAILES.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EventID"] = new SelectList(_context.Event, "ID", "ID", eventAttendance.EventID);
-            ViewData["StudentID"] = new SelectList(_context.Student, "ID", "ID", eventAttendance.StudentID);
+            ViewData["EventID"] = new SelectList(_context.Event, "ID", "Name", eventAttendance.EventID);
+            ViewData["StudentID"] = new SelectList(_context.Student, "ID", "LastName", eventAttendance.StudentID);
             return View(eventAttendance);
         }
 
@@ -85,8 +85,8 @@ namespace TRAILES.Controllers
             {
                 return NotFound();
             }
-            ViewData["EventID"] = new SelectList(_context.Event, "ID", "ID", eventAttendance.EventID);
-            ViewData["StudentID"] = new SelectList(_context.Student, "ID", "ID", eventAttendance.StudentID);
+            ViewData["EventID"] = new SelectList(_context.Event, "ID", "Name", eventAttendance.EventID);
+            ViewData["StudentID"] = new SelectList(_context.Student, "ID", "LastName", eventAttendance.StudentID);
             return View(eventAttendance);
         }
 
@@ -122,8 +122,8 @@ namespace TRAILES.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EventID"] = new SelectList(_context.Event, "ID", "ID", eventAttendance.EventID);
-            ViewData["StudentID"] = new SelectList(_context.Student, "ID", "ID", eventAttendance.StudentID);
+            ViewData["EventID"] = new SelectList(_context.Event, "ID", "Name", eventAttendance.EventID);
+            ViewData["StudentID"] = new SelectList(_context.Student, "ID", "LastName", eventAttendance.StudentID);
             return View(eventAttendance);
         }
 
