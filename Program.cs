@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
+using TRAILES.Data;
 
 namespace TRAILES
 {
@@ -13,7 +15,29 @@ namespace TRAILES
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var host = CreateHostBuilder(args).Build();
+            CreateDbIfNotExists(host);
+            host.Run();
+        }
+
+        public static void CreateDbIfNotExists(Microsoft.Extensions.Hosting.IHost host)
+        {
+            using (var scope = host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+
+                try
+                {
+                    var context = services.GetRequiredService<TRAILESContext>();
+                    //context.Database.EnsureCreated();
+                    DbInit.Init(context);
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred creating the DB.");
+                }
+            }
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

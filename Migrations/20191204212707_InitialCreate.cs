@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TRAILES.Migrations
 {
@@ -29,7 +30,8 @@ namespace TRAILES.Migrations
                     ID = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(nullable: true),
-                    MaxAttendance = table.Column<int>(nullable: false)
+                    MaxAttendance = table.Column<int>(nullable: false),
+                    StartTime = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {

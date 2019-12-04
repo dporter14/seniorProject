@@ -51,6 +51,9 @@ namespace TRAILES.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("ID");
 
                     b.ToTable("Event");

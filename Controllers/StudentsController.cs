@@ -48,7 +48,7 @@ namespace TRAILES.Controllers
         // GET: Students/Create
         public IActionResult Create()
         {
-            ViewData["CabinID"] = new SelectList(_context.Cabin, "ID", "ID");
+            ViewData["CabinID"] = new SelectList(_context.Cabin, "ID", "Name");
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace TRAILES.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CabinID"] = new SelectList(_context.Cabin, "ID", "ID", student.CabinID);
+            ViewData["CabinID"] = new SelectList(_context.Cabin, "ID", "Name", student.CabinID);
             return View(student);
         }
 
@@ -82,7 +82,7 @@ namespace TRAILES.Controllers
             {
                 return NotFound();
             }
-            ViewData["CabinID"] = new SelectList(_context.Cabin, "ID", "ID", student.CabinID);
+            ViewData["CabinID"] = new SelectList(_context.Cabin, "ID", "Name", student.CabinID);
             return View(student);
         }
 
@@ -118,7 +118,7 @@ namespace TRAILES.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CabinID"] = new SelectList(_context.Cabin, "ID", "ID", student.CabinID);
+            ViewData["CabinID"] = new SelectList(_context.Cabin, "ID", "Name", student.CabinID);
             return View(student);
         }
 
