@@ -93,7 +93,8 @@ namespace TRAILES.Migrations
                     EventID = table.Column<int>(nullable: false),
                     StudentID = table.Column<int>(nullable: false),
                     Priority = table.Column<int>(nullable: false),
-                    Assigned = table.Column<bool>(nullable: true)
+                    Assigned = table.Column<bool>(nullable: true),
+                    weight = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {

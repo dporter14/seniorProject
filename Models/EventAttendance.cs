@@ -10,6 +10,7 @@ namespace TRAILES.Models
         public int StudentID {get; set;}
         public int Priority {get; set;}
         public bool? Assigned {get; set;} 
+        public double weight {get; set;} = 0;
 
         public Event Event {get; set;}
         public Student Student {get; set;}

@@ -23,6 +23,55 @@ namespace TRAILES.Data
                     FirstMidName = "John",
                     Gender = Gender.M,
                     GradeLevel = 12
+                },
+                new Student
+                {
+                    LastName = "Dane",
+                    FirstMidName = "Jane",
+                    Gender = Gender.F,
+                    GradeLevel = 9
+                },
+                new Student
+                {
+                    LastName = "Porter",
+                    FirstMidName = "David",
+                    Gender = Gender.M,
+                    GradeLevel = 11
+                },
+                new Student
+                {
+                    LastName = "Raines",
+                    FirstMidName = "Avery",
+                    Gender = Gender.M,
+                    GradeLevel = 10
+                },
+                new Student
+                {
+                    LastName = "Pierce",
+                    FirstMidName = "Mason",
+                    Gender = Gender.M,
+                    GradeLevel = 9
+                },
+                new Student
+                {
+                    LastName = "Moe",
+                    FirstMidName = "Edna",
+                    Gender = Gender.F,
+                    GradeLevel = 12
+                },
+                new Student
+                {
+                    LastName = "Indigo",
+                    FirstMidName = "Violet",
+                    Gender = Gender.F,
+                    GradeLevel = 11
+                },
+                new Student
+                {
+                    LastName = "Baby",
+                    FirstMidName = "DaJoker",
+                    Gender = Gender.F,
+                    GradeLevel = 10
                 }
             };
             foreach (Student s in students)
@@ -33,6 +82,12 @@ namespace TRAILES.Data
 
             var employees = new FacStaff[]
             {
+                new FacStaff
+                {
+                    LastName = "Wells",
+                    FirstMid = "Sara",
+                    Admin = true
+                },
                 new FacStaff
                 {
                     LastName = "Deer",
@@ -50,26 +105,26 @@ namespace TRAILES.Data
                 new Event
                 {
                     Name = "Paintball 1pm",
-                    MaxAttendance = 20,
+                    MaxAttendance = 2,
                     StartTime = Convert.ToDateTime("2020-09-15 13:00:00")
                 },
                 new Event
                 {
                     Name = "Paintball 3pm",
-                    MaxAttendance = 20,
+                    MaxAttendance = 2,
                     StartTime = Convert.ToDateTime("2020-09-15 15:00:00")
                 },
                 new Event
                 {
-                    Name = "High Ropes 1pm",
-                    MaxAttendance = 20,
-                    StartTime = Convert.ToDateTime("2020-09-15 13:00:00")
+                    Name = "High Ropes 2pm",
+                    MaxAttendance = 2,
+                    StartTime = Convert.ToDateTime("2020-09-15 14:00:00")
                 },
                 new Event
                 {
-                    Name = "High Ropes 3pm",
-                    MaxAttendance = 20,
-                    StartTime = Convert.ToDateTime("2020-09-15 15:00:00")
+                    Name = "Kayacking 4pm",
+                    MaxAttendance = 2,
+                    StartTime = Convert.ToDateTime("2020-09-15 16:00:00")
                 }
             };
             foreach (Event e in events)

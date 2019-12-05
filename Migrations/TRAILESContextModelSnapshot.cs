@@ -77,6 +77,9 @@ namespace TRAILES.Migrations
                     b.Property<int>("StudentID")
                         .HasColumnType("INTEGER");
 
+                    b.Property<double>("weight")
+                        .HasColumnType("REAL");
+
                     b.HasKey("ID");
 
                     b.HasIndex("EventID");

@@ -9,7 +9,7 @@ using TRAILES.Data;
 namespace TRAILES.Migrations
 {
     [DbContext(typeof(TRAILESContext))]
-    [Migration("20191204212707_InitialCreate")]
+    [Migration("20191205073455_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -78,6 +78,9 @@ namespace TRAILES.Migrations
 
                     b.Property<int>("StudentID")
                         .HasColumnType("INTEGER");
+
+                    b.Property<double>("weight")
+                        .HasColumnType("REAL");
 
                     b.HasKey("ID");
 
