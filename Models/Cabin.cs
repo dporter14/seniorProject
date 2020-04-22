@@ -1,35 +1,20 @@
 using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace TRAILES.Models
 {
     public class Cabin
     {
-        public int CabinId {get; set;}
-
-        [StringLength(60, MinimumLength = 3)]
-        [Required]
-        public string Name {get; set;}
-
-        [Display(Name = "Date Added")]
-        [DataType(DataType.Date)]
-        public DateTime AddDate {get; set;} = DateTime.Now;
-
-        [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
-        [Required]
-        [StringLength(10)]
-        public string Gender {get; set;}
-
-        [Range(1,30)]
+        public int CabinID { get; set; }
+        public string Name { get; set; }
+        public Gender Gender { get; set; }
         [Display(Name = "Bed Count")]
-        public int BedCount {get; set;}
+        public int BedCount { get; set; } = 9;
+        [Display(Name = "Beds Taken")]
+        public int BedsRegistered { get; set; } = 0;
+        public string Chapperone { get; set; } = "";
 
-        [Display(Name = "Beds Filled")]
-        [Range(0,30)]
-        public int BedsFilled {get; set;} = 0;
-
-        public IList<User> Users {get; set;}
+        public ICollection<Student> Students;
     }
 }
