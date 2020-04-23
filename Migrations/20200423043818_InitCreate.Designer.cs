@@ -9,8 +9,8 @@ using TRAILES.Data;
 namespace TRAILES.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200422054106_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20200423043818_InitCreate")]
+    partial class InitCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -300,7 +300,7 @@ namespace TRAILES.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<int?>("CabinID")
+                    b.Property<int>("CabinID")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Fname")
@@ -394,7 +394,9 @@ namespace TRAILES.Migrations
                 {
                     b.HasOne("TRAILES.Models.Cabin", "Cabin")
                         .WithMany()
-                        .HasForeignKey("CabinID");
+                        .HasForeignKey("CabinID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

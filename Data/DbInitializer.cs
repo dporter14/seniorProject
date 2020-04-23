@@ -26,6 +26,17 @@ namespace TRAILES.Data
             user.EmailConfirmed = true;
             await userManager.CreateAsync(user, "$Password1");
 
+            int studentCount = 8;
+            var cab = new Cabin
+            {
+                Name = "Unassigned",
+                Gender = Gender.Other,
+                BedCount = int.MaxValue,
+                BedsRegistered = studentCount
+            };
+            await context.Cabins.AddAsync(cab);
+            await context.SaveChangesAsync();
+
             await SeedDb(context, userManager);
 
         }
@@ -99,6 +110,8 @@ namespace TRAILES.Data
                 stu.AccessFailedCount = 0;
                 var email = stu.Fname.First() + stu.Lname + "@bchstest.com";
                 stu.UserName = email;
+                stu.Email = email;
+                stu.CabinID = 1;
                 await userManager.CreateAsync(stu, "Password1$");
             }
             await context.SaveChangesAsync();

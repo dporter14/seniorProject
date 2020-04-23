@@ -8952,11 +8952,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/mnt/d/Programming/RazorPage/TRAILES/TRAILES.csproj",
+      "projectUniqueName": "/mnt/d/Programming/RazorPage/seniorProject/TRAILES.csproj",
       "projectName": "TRAILES",
-      "projectPath": "/mnt/d/Programming/RazorPage/TRAILES/TRAILES.csproj",
+      "projectPath": "/mnt/d/Programming/RazorPage/seniorProject/TRAILES.csproj",
       "packagesPath": "/home/importd/.nuget/packages/",
-      "outputPath": "/mnt/d/Programming/RazorPage/TRAILES/obj/",
+      "outputPath": "/mnt/d/Programming/RazorPage/seniorProject/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/importd/.nuget/NuGet/NuGet.Config"

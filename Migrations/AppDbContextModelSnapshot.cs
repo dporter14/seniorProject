@@ -298,7 +298,7 @@ namespace TRAILES.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<int?>("CabinID")
+                    b.Property<int>("CabinID")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Fname")
@@ -392,7 +392,9 @@ namespace TRAILES.Migrations
                 {
                     b.HasOne("TRAILES.Models.Cabin", "Cabin")
                         .WithMany()
-                        .HasForeignKey("CabinID");
+                        .HasForeignKey("CabinID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

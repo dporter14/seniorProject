@@ -1,0 +1,63 @@
+@page
+@model TRAILES.Pages.Events.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Event</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Event.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Event.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Event.MaxAttendance)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Event.MaxAttendance)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Event.StartTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Event.StartTime)
+        </dd>
+                <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Event.EventAttendances)
+        </dt>
+        <dd class="col-sm-10">
+            <table class="table">
+                <tr>
+                    <th>Student Name</th>
+                    <th>Grade</th>
+                    <th>Priority Given</th>
+                </tr>
+                @foreach (var item in Model.Event.EventAttendances)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Student.Lname + ", " + item.Student.Fname)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Student.GradeLevel)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Priority)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Event.EventID">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

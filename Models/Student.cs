@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations.Schema;
 
 
 namespace TRAILES.Models
@@ -23,7 +24,7 @@ namespace TRAILES.Models
         [Display(Name = "Events Chosen")]
         public int priorityRemaining { get; set; } = 0;
 
-        public int? CabinID { get; set; }
+        public int CabinID { get; set; } = 1;
         public Cabin Cabin { get; set; }
 
         public ICollection<EventAttendance> EventAttendances { get; set; }
