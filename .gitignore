@@ -1,5 +1,5 @@
 #################
-# ADDED BY David Vaughan
+# ADDED BY David Porter
 # See attributions below
 # Custom tags after this line, then defaults from the generator
 *.code-workspace
@@ -7,6 +7,7 @@
 *.env
 obj/
 bin/
+TRAILES.db
 
 
 # Created by https://www.gitignore.io/api/windows
