@@ -21,20 +21,29 @@ namespace TRAILES.Pages.Cabins
 
         [BindProperty]
         public Cabin Cabin { get; set; }
+        public string ErrorMessage {get; set;}
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int? id, bool? saveChangesError = false)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            Cabin = await _context.Cabins.FirstOrDefaultAsync(m => m.CabinID == id);
+            Cabin = await _context.Cabins
+            .AsNoTracking()
+            .FirstOrDefaultAsync(m => m.CabinID == id);
 
             if (Cabin == null)
             {
                 return NotFound();
             }
+
+            if (saveChangesError.GetValueOrDefault())
+            {
+                ErrorMessage = "Delete failed. Try again";
+            }
+            
             return Page();
         }
 
@@ -45,15 +54,23 @@ namespace TRAILES.Pages.Cabins
                 return NotFound();
             }
 
-            Cabin = await _context.Cabins.FindAsync(id);
+            var cabin = await _context.Cabins.FindAsync(id);
 
-            if (Cabin != null)
+            if (cabin == null)
+            {
+                return NotFound();
+            }
+
+            try
             {
                 _context.Cabins.Remove(Cabin);
                 await _context.SaveChangesAsync();
+                return RedirectToPage("./Index");
             }
-
-            return RedirectToPage("./Index");
+            catch (DbUpdateException /* ex */)
+            {
+                return RedirectToAction("./Delete", new {id, saveChangesError = true});
+            }
         }
     }
 }

@@ -21,8 +21,9 @@ namespace TRAILES.Pages.Students
 
         [BindProperty]
         public Student Student { get; set; }
+        public string ErrorMessage { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        public async Task<IActionResult> OnGetAsync(string id, bool? saveChangesError = false)
         {
             if (id == null)
             {
@@ -30,11 +31,12 @@ namespace TRAILES.Pages.Students
             }
 
             Student = await _context.Students
+                .AsNoTracking()
                 .Include(s => s.Cabin).FirstOrDefaultAsync(m => m.Id == id);
 
-            if (Student == null)
+            if (saveChangesError.GetValueOrDefault())
             {
-                return NotFound();
+                ErrorMessage = "Delete failed. Try again";
             }
             return Page();
         }
@@ -46,15 +48,24 @@ namespace TRAILES.Pages.Students
                 return NotFound();
             }
 
-            Student = await _context.Students.FindAsync(id);
+            var student = await _context.Students.FindAsync(id);
 
-            if (Student != null)
+            if (student == null)
             {
-                _context.Students.Remove(Student);
-                await _context.SaveChangesAsync();
+                return NotFound();
             }
 
-            return RedirectToPage("./Index");
+            try
+            {
+                _context.Students.Remove(student);
+                await _context.SaveChangesAsync();
+                return RedirectToPage("./Index");
+            }
+            catch (DbUpdateException /* ex */)
+            {
+                return RedirectToAction("./Delete", new {id, saveChangesError = true});
+            }
+
         }
     }
 }

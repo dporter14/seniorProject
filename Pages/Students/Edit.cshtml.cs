@@ -41,7 +41,7 @@ namespace TRAILES.Pages.Students
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync(int  id)
+        public async Task<IActionResult> OnPostAsync(string id)
         {
             var StudentToUpdate = await _context.Students.FindAsync(id);
             if (StudentToUpdate == null)

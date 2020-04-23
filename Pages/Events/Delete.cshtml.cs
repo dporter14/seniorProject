@@ -21,20 +21,29 @@ namespace TRAILES.Pages.Events
 
         [BindProperty]
         public Event Event { get; set; }
+        public string ErrorMessage {get; set;}
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int? id, bool? saveChangesError = false)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            Event = await _context.Events.FirstOrDefaultAsync(m => m.EventID == id);
+            Event = await _context.Events
+            .AsNoTracking()
+            .FirstOrDefaultAsync(m => m.EventID == id);
 
             if (Event == null)
             {
                 return NotFound();
             }
+
+            if (saveChangesError.GetValueOrDefault())
+            {
+                ErrorMessage = "Delete failed. Try again";
+            }
+
             return Page();
         }
 
@@ -45,15 +54,23 @@ namespace TRAILES.Pages.Events
                 return NotFound();
             }
 
-            Event = await _context.Events.FindAsync(id);
+            var eve = await _context.Events.FindAsync(id);
 
-            if (Event != null)
+            if (eve == null)
+            {
+                return NotFound();
+            }
+
+            try
             {
                 _context.Events.Remove(Event);
                 await _context.SaveChangesAsync();
+                return RedirectToPage("./Index");
             }
-
-            return RedirectToPage("./Index");
+            catch (DbUpdateException /* ex */)
+            {
+                return RedirectToAction("./Delete", new {id, saveChangesError = true});
+            }
         }
     }
 }

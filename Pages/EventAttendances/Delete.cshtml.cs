@@ -21,8 +21,9 @@ namespace TRAILES.Pages.EventAttendances
 
         [BindProperty]
         public EventAttendance EventAttendance { get; set; }
+        public string ErrorMessage {get; set;}
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int? id, bool? saveChangesError = false)
         {
             if (id == null)
             {
@@ -31,12 +32,20 @@ namespace TRAILES.Pages.EventAttendances
 
             EventAttendance = await _context.EventAttendances
                 .Include(e => e.Event)
-                .Include(e => e.Student).FirstOrDefaultAsync(m => m.EventAttendanceID == id);
+                .Include(e => e.Student)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.EventAttendanceID == id);
 
             if (EventAttendance == null)
             {
                 return NotFound();
             }
+
+            if (saveChangesError.GetValueOrDefault())
+            {
+                ErrorMessage = "Delete failed. Try again";
+            }
+
             return Page();
         }
 
@@ -47,15 +56,23 @@ namespace TRAILES.Pages.EventAttendances
                 return NotFound();
             }
 
-            EventAttendance = await _context.EventAttendances.FindAsync(id);
+            var eventattendance = await _context.EventAttendances.FindAsync(id);
 
-            if (EventAttendance != null)
+            if (eventattendance == null)
+            {
+                return NotFound();
+            }
+
+            try
             {
                 _context.EventAttendances.Remove(EventAttendance);
                 await _context.SaveChangesAsync();
+                return RedirectToPage("./Index");
             }
-
-            return RedirectToPage("./Index");
+            catch (DbUpdateException /* ex */)
+            {
+                return RedirectToAction("./Delete", new {id, saveChangesError = true});
+            }
         }
     }
 }

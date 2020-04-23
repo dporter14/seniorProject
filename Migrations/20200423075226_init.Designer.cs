@@ -9,8 +9,8 @@ using TRAILES.Data;
 namespace TRAILES.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200423043818_InitCreate")]
-    partial class InitCreate
+    [Migration("20200423075226_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -23,7 +23,7 @@ namespace TRAILES.Pages.Cabins
         [BindProperty]
         public Cabin Cabin { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
             {
