@@ -23,14 +23,14 @@ namespace TRAILES.Pages.Cabins
         [BindProperty]
         public Cabin Cabin { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            Cabin = await _context.Cabins.FirstOrDefaultAsync(m => m.CabinID == id);
+            Cabin = await _context.Cabins.FindAsync(id);
 
             if (Cabin == null)
             {
@@ -41,32 +41,29 @@ namespace TRAILES.Pages.Cabins
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int  id)
         {
-            if (!ModelState.IsValid)
+            var CabinToUpdate = await _context.Cabins.FindAsync(id);
+            if (CabinToUpdate == null)
             {
-                return Page();
+                return NotFound();
             }
 
-            _context.Attach(Cabin).State = EntityState.Modified;
-
-            try
+            if (await TryUpdateModelAsync<Cabin>(
+                CabinToUpdate,
+                "cabin",
+                c => c.Name,
+                c => c.Gender,
+                c => c.BedCount,
+                c => c.BedsRegistered,
+                c => c.Chapperone
+            ))
             {
                 await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CabinExists(Cabin.CabinID))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return RedirectToPage("./Index");
             }
 
-            return RedirectToPage("./Index");
+            return Page();
         }
 
         private bool CabinExists(int id)

@@ -48,26 +48,10 @@
                 <select asp-for="Student.CabinID" class="form-control" asp-items="ViewBag.CabinID"></select>
                 <span asp-validation-for="Student.CabinID" class="text-danger"></span>
             </div>
-            <input type="hidden" asp-for="Student.Id" />
-            <div class="form-group">
-                <label asp-for="Student.UserName" class="control-label"></label>
-                <input asp-for="Student.UserName" class="form-control" />
-                <span asp-validation-for="Student.UserName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Student.NormalizedUserName" class="control-label"></label>
-                <input asp-for="Student.NormalizedUserName" class="form-control" />
-                <span asp-validation-for="Student.NormalizedUserName" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <label asp-for="Student.Email" class="control-label"></label>
                 <input asp-for="Student.Email" class="form-control" />
                 <span asp-validation-for="Student.Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Student.NormalizedEmail" class="control-label"></label>
-                <input asp-for="Student.NormalizedEmail" class="form-control" />
-                <span asp-validation-for="Student.NormalizedEmail" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

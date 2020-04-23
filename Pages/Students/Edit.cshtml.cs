@@ -30,45 +30,42 @@ namespace TRAILES.Pages.Students
                 return NotFound();
             }
 
-            Student = await _context.Students
-                .Include(s => s.Cabin).FirstOrDefaultAsync(m => m.Id == id);
+            Student = await _context.Students.FindAsync(id);
 
             if (Student == null)
             {
                 return NotFound();
             }
-           ViewData["CabinID"] = new SelectList(_context.Cabins, "CabinID", "CabinID");
             return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int  id)
         {
-            if (!ModelState.IsValid)
+            var StudentToUpdate = await _context.Students.FindAsync(id);
+            if (StudentToUpdate == null)
             {
-                return Page();
+                return NotFound();
             }
 
-            _context.Attach(Student).State = EntityState.Modified;
-
-            try
+            if (await TryUpdateModelAsync<Student>(
+                StudentToUpdate,
+                "student",
+                s => s.Fname,
+                s => s.Lname,
+                s => s.Gender,
+                s => s.GradeLevel,
+                s => s.Registered,
+                s => s.Email
+            ))
             {
+                StudentToUpdate.UserName = StudentToUpdate.Email;
                 await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!StudentExists(Student.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return RedirectToPage("./Index");
             }
 
-            return RedirectToPage("./Index");
+            return Page();
         }
 
         private bool StudentExists(string id)

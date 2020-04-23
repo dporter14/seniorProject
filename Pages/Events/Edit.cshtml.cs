@@ -23,14 +23,14 @@ namespace TRAILES.Pages.Events
         [BindProperty]
         public Event Event { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            Event = await _context.Events.FirstOrDefaultAsync(m => m.EventID == id);
+            Event = await _context.Events.FindAsync(id);
 
             if (Event == null)
             {
@@ -41,32 +41,25 @@ namespace TRAILES.Pages.Events
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int  id)
         {
-            if (!ModelState.IsValid)
+            var EventToUpdate = await _context.Events.FindAsync(id);
+            if (EventToUpdate == null)
             {
-                return Page();
+                return NotFound();
             }
 
-            _context.Attach(Event).State = EntityState.Modified;
-
-            try
+            if (await TryUpdateModelAsync<Event>(
+                EventToUpdate,
+                "event",
+                e => e.Name, e=> e.MaxAttendance, e => e.StartTime
+            ))
             {
                 await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EventExists(Event.EventID))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return RedirectToPage("./Index");
             }
 
-            return RedirectToPage("./Index");
+            return Page();
         }
 
         private bool EventExists(int id)

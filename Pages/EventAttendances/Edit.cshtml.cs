@@ -23,54 +23,43 @@ namespace TRAILES.Pages.EventAttendances
         [BindProperty]
         public EventAttendance EventAttendance { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            EventAttendance = await _context.EventAttendances
-                .Include(e => e.Event)
-                .Include(e => e.Student).FirstOrDefaultAsync(m => m.EventAttendanceID == id);
+            EventAttendance = await _context.EventAttendances.FindAsync(id);
 
             if (EventAttendance == null)
             {
                 return NotFound();
             }
-           ViewData["EventID"] = new SelectList(_context.Events, "EventID", "EventID");
-           ViewData["StudentID"] = new SelectList(_context.Students, "Id", "Id");
             return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int  id)
         {
-            if (!ModelState.IsValid)
+            var EventAttendanceToUpdate = await _context.EventAttendances.FindAsync(id);
+            if (EventAttendanceToUpdate == null)
             {
-                return Page();
+                return NotFound();
             }
 
-            _context.Attach(EventAttendance).State = EntityState.Modified;
-
-            try
+            if (await TryUpdateModelAsync<EventAttendance>(
+                EventAttendanceToUpdate,
+                "eventattendance",
+                e => e.Priority, e=> e.Assigned, e => e.Weight, e => e.EventID, e => e.StudentID
+            ))
             {
                 await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EventAttendanceExists(EventAttendance.EventAttendanceID))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return RedirectToPage("./Index");
             }
 
-            return RedirectToPage("./Index");
+            return Page();
         }
 
         private bool EventAttendanceExists(int id)
