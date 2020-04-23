@@ -33,15 +33,20 @@ namespace TRAILES.Pages.EventAttendances
         // more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            var emptyEventAttendance = new EventAttendance();
+            if (await TryUpdateModelAsync<EventAttendance>(
+                emptyEventAttendance,
+                "eventattendance",
+                e => e.Priority, e=> e.Assigned, e => e.Weight, e => e.EventID, e => e.StudentID
+            ))
             {
-                return Page();
+                _context.EventAttendances.Add(emptyEventAttendance);
+                await _context.SaveChangesAsync();
+                return RedirectToPage("./Index");
             }
 
-            _context.EventAttendances.Add(EventAttendance);
-            await _context.SaveChangesAsync();
+            return Page();
 
-            return RedirectToPage("./Index");
         }
     }
 }

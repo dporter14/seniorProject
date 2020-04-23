@@ -31,15 +31,20 @@ namespace TRAILES.Pages.Events
         // more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            var emptyEvent = new Event();
+            if (await TryUpdateModelAsync<Event>(
+                emptyEvent,
+                "event",
+                e => e.Name, e=> e.MaxAttendance, e => e.StartTime
+            ))
             {
-                return Page();
+                _context.Events.Add(emptyEvent);
+                await _context.SaveChangesAsync();
+                return RedirectToPage("./Index");
             }
 
-            _context.Events.Add(Event);
-            await _context.SaveChangesAsync();
+            return Page();
 
-            return RedirectToPage("./Index");
         }
     }
 }

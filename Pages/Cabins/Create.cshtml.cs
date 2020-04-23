@@ -31,15 +31,21 @@ namespace TRAILES.Pages.Cabins
         // more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            var emptyCabin= new Cabin();
+            if (await TryUpdateModelAsync<Cabin>(
+                emptyCabin,
+                "cabin",
+                c => c.Name,
+                c => c.Gender
+            ))
             {
-                return Page();
+                _context.Cabins.Add(emptyCabin);
+                await _context.SaveChangesAsync();
+                return RedirectToPage("./Index");
             }
 
-            _context.Cabins.Add(Cabin);
-            await _context.SaveChangesAsync();
+            return Page();
 
-            return RedirectToPage("./Index");
         }
     }
 }

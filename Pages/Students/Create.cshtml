@@ -39,88 +39,9 @@
                 </label>
             </div>
             <div class="form-group">
-                <label asp-for="Student.priorityRemaining" class="control-label"></label>
-                <input asp-for="Student.priorityRemaining" class="form-control" />
-                <span asp-validation-for="Student.priorityRemaining" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Student.CabinID" class="control-label"></label>
-                <select asp-for="Student.CabinID" class ="form-control" asp-items="ViewBag.CabinID"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Student.Id" class="control-label"></label>
-                <input asp-for="Student.Id" class="form-control" />
-                <span asp-validation-for="Student.Id" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Student.UserName" class="control-label"></label>
-                <input asp-for="Student.UserName" class="form-control" />
-                <span asp-validation-for="Student.UserName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Student.NormalizedUserName" class="control-label"></label>
-                <input asp-for="Student.NormalizedUserName" class="form-control" />
-                <span asp-validation-for="Student.NormalizedUserName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Student.Email" class="control-label"></label>
                 <input asp-for="Student.Email" class="form-control" />
                 <span asp-validation-for="Student.Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Student.NormalizedEmail" class="control-label"></label>
-                <input asp-for="Student.NormalizedEmail" class="form-control" />
-                <span asp-validation-for="Student.NormalizedEmail" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Student.EmailConfirmed" /> @Html.DisplayNameFor(model => model.Student.EmailConfirmed)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="Student.PasswordHash" class="control-label"></label>
-                <input asp-for="Student.PasswordHash" class="form-control" />
-                <span asp-validation-for="Student.PasswordHash" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Student.SecurityStamp" class="control-label"></label>
-                <input asp-for="Student.SecurityStamp" class="form-control" />
-                <span asp-validation-for="Student.SecurityStamp" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Student.ConcurrencyStamp" class="control-label"></label>
-                <input asp-for="Student.ConcurrencyStamp" class="form-control" />
-                <span asp-validation-for="Student.ConcurrencyStamp" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Student.PhoneNumber" class="control-label"></label>
-                <input asp-for="Student.PhoneNumber" class="form-control" />
-                <span asp-validation-for="Student.PhoneNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Student.PhoneNumberConfirmed" /> @Html.DisplayNameFor(model => model.Student.PhoneNumberConfirmed)
-                </label>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Student.TwoFactorEnabled" /> @Html.DisplayNameFor(model => model.Student.TwoFactorEnabled)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="Student.LockoutEnd" class="control-label"></label>
-                <input asp-for="Student.LockoutEnd" class="form-control" />
-                <span asp-validation-for="Student.LockoutEnd" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Student.LockoutEnabled" /> @Html.DisplayNameFor(model => model.Student.LockoutEnabled)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="Student.AccessFailedCount" class="control-label"></label>
-                <input asp-for="Student.AccessFailedCount" class="form-control" />
-                <span asp-validation-for="Student.AccessFailedCount" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
