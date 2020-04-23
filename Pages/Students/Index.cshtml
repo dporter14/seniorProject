@@ -2,10 +2,10 @@
 @model TRAILES.Pages.Students.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Students";
 }
 
-<h1>Index</h1>
+<h1>Students</h1>
 
 <p>
     <a asp-page="Create">Create New</a>
@@ -14,45 +14,37 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Student[0].Fname)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.NameSort">
+                    @Html.DisplayNameFor(model => model.Students[0].Lname)
+                </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Student[0].Lname)
+                @Html.DisplayNameFor(model => model.Students[0].Fname)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Student[0].Gender)
+                @Html.DisplayNameFor(model => model.Students[0].Gender)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Student[0].GradeLevel)
+                @Html.DisplayNameFor(model => model.Students[0].GradeLevel)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Student[0].Registered)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.RegisteredSort">
+                    @Html.DisplayNameFor(model => model.Students[0].Registered)
+                </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Student[0].priorityRemaining)
+                @Html.DisplayNameFor(model => model.Students[0].priorityRemaining)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Student[0].Cabin)
+                @Html.DisplayNameFor(model => model.Students[0].Cabin)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Student[0].UserName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Student[0].NormalizedUserName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Student[0].Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Student[0].NormalizedEmail)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Student[0].EmailConfirmed)
+                @Html.DisplayNameFor(model => model.Students[0].Email)
             </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Student) {
+@foreach (var item in Model.Students) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Fname)
@@ -73,22 +65,10 @@
                 @Html.DisplayFor(modelItem => item.priorityRemaining)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Cabin.CabinID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NormalizedUserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
+                @Html.DisplayFor(modelItem => item.Cabin.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.NormalizedEmail)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmailConfirmed)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |

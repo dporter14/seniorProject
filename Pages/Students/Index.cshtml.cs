@@ -19,12 +19,39 @@ namespace TRAILES.Pages.Students
             _context = context;
         }
 
-        public IList<Student> Student { get;set; }
+        public string NameSort { get; set; }
+        public string GenderSort { get; set; }
+        public string RegisteredSort{ get; set; }
+        public IList<Student> Students { get;set; }
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(string sortOrder)
         {
-            Student = await _context.Students
-                .Include(s => s.Cabin).ToListAsync();
+            NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            RegisteredSort = sortOrder == "Registered" ? "reg_desc" : "Registered";
+
+            IQueryable<Student> studentsIQ = from s in _context.Students
+                                                select s;
+
+            switch(sortOrder)
+            {
+                case "reg_desc":
+                    studentsIQ = studentsIQ.OrderByDescending(s => s.Registered);
+                    break;
+                case "Registered":
+                    studentsIQ = studentsIQ.OrderBy(s => s.Registered);
+                    break;
+                case "name_desc":
+                    studentsIQ = studentsIQ.OrderByDescending(s => s.Lname);
+                    break;
+                default:
+                    studentsIQ = studentsIQ.OrderBy(s => s.Lname);
+                    break;
+            }
+
+            Students = await studentsIQ
+            .Include(s => s.Cabin)
+            .AsNoTracking()
+            .ToListAsync();
         }
     }
 }
