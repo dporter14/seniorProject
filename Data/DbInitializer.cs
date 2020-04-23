@@ -14,17 +14,15 @@ namespace TRAILES.Data
     {
         public static async Task Initialize(IServiceProvider serviceProvider)
         {
-            var userManager = serviceProvider.GetService<UserManager<IdentityUser>>();
             var context = serviceProvider.GetRequiredService<AppDbContext>();
-
             if (context.Students.Any())
             {
                 return;
             }
+            var userManager = serviceProvider.GetService<UserManager<IdentityUser>>();
+            //var roleManager = serviceProvider.GetService<RoleManager<IdentityRole>>();
 
-            var user = new IdentityUser("admin@bchstest.com");
-            user.EmailConfirmed = true;
-            await userManager.CreateAsync(user, "$Password1");
+            var adminId = await EnsureRole(userManager, "$Password1", "admin@bchstest.com");
 
             int studentCount = 8;
             var cab = new Cabin
@@ -39,6 +37,25 @@ namespace TRAILES.Data
 
             await SeedDb(context, userManager);
 
+        }
+        private static async Task<string> EnsureRole(UserManager<IdentityUser> userManager, string testUserPw, string UserName)
+        {
+            var user = await userManager.FindByNameAsync(UserName);
+            if (user == null)
+            {
+                user = new IdentityUser {
+                    UserName = UserName,
+                    EmailConfirmed = true
+                };
+                await userManager.CreateAsync(user, testUserPw);
+            }
+
+            if (user == null)
+            {
+                throw new Exception("Weak password");
+            }
+
+            return user.Id;
         }
 
         public static async Task SeedDb(AppDbContext context, UserManager<IdentityUser> userManager)
