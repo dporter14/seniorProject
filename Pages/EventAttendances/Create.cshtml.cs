@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using TRAILES.Data;
 using TRAILES.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TRAILES.Pages.EventAttendances
 {
+    [Authorize(Policy = "RequireAdministratorRole")]
     public class CreateModel : PageModel
     {
         private readonly TRAILES.Data.AppDbContext _context;

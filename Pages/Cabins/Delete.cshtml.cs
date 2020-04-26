@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using TRAILES.Data;
 using TRAILES.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TRAILES.Pages.Cabins
 {
+    [Authorize(Policy = "RequireAdministratorRole")]
     public class DeleteModel : PageModel
     {
         private readonly TRAILES.Data.AppDbContext _context;

@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TRAILES.Data;
 using TRAILES.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TRAILES.Pages.Events
 {
+    [Authorize(Policy = "RequireAdministratorRole")]
     public class EditModel : PageModel
     {
         private readonly TRAILES.Data.AppDbContext _context;

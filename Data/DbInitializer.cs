@@ -118,6 +118,7 @@ namespace TRAILES.Data
                     GradeLevel = 12
                 }
             };
+            int stuCnt = 0;
             foreach (var stu  in students)
             {
                 stu.EmailConfirmed = true;
@@ -130,8 +131,12 @@ namespace TRAILES.Data
                 stu.Email = email;
                 stu.CabinID = 1;
                 await userManager.CreateAsync(stu, "Password1$");
+                stuCnt++;
             }
             await context.SaveChangesAsync();
+
+            var ogcab = await context.Cabins.FindAsync(1);
+            ogcab.BedCount= stuCnt;
 
             await context.Cabins.AddRangeAsync(
                 new Cabin{Name = "Everest #101",Gender = Gender.Male},
