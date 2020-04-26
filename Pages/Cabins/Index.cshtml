@@ -5,10 +5,13 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Cabins</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    @if(User.Identity.Name == "admin@bchstest.com")
+    {
+        <a asp-page="Create">Create New</a>
+    }   
 </p>
 <table class="table">
     <thead>
@@ -23,7 +26,9 @@
                 @Html.DisplayNameFor(model => model.Cabin[0].BedCount)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Cabin[0].BedsRegistered)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.CountSort">
+                    @Html.DisplayNameFor(model => model.Cabin[0].BedsRegistered)
+                </a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Cabin[0].Chapperone)
@@ -50,9 +55,12 @@
                 @Html.DisplayFor(modelItem => item.Chapperone)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.CabinID">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.CabinID">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.CabinID">Delete</a>
+                <a asp-page="./Details" asp-route-id="@item.CabinID" class="btn btn-primary">Details</a> 
+                @if(User.Identity.Name == "admin@bchstest.com")
+                {
+                    <a asp-page="./Edit" asp-route-id="@item.CabinID">| Edit</a> 
+                    <a asp-page="./Delete" asp-route-id="@item.CabinID">| Delete</a>
+                }
             </td>
         </tr>
 }
