@@ -24,11 +24,6 @@
                 <span asp-validation-for="Student.Lname" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Student.Gender" class="control-label"></label>
-                <select asp-for="Student.Gender" class="form-control"></select>
-                <span asp-validation-for="Student.Gender" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Student.GradeLevel" class="control-label"></label>
                 <input asp-for="Student.GradeLevel" class="form-control" />
                 <span asp-validation-for="Student.GradeLevel" class="text-danger"></span>
@@ -44,8 +39,8 @@
                 <span asp-validation-for="Student.priorityRemaining" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Student.CabinID" class="control-label"></label>
-                <select asp-for="Student.CabinID" class="form-control" asp-items="ViewBag.CabinID"></select>
+                <label asp-for="Student.Cabin" class="control-label"></label>
+                <select asp-for="Student.CabinID" class="form-control" asp-items="@Model.CabinNameSL"></select>
                 <span asp-validation-for="Student.CabinID" class="text-danger"></span>
             </div>
             <div class="form-group">

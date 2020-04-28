@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace TRAILES.Pages.Students
 {
     [Authorize(Policy = "RequireAdministratorRole")]
-    public class EditModel : PageModel
+    public class EditModel : CabinNamePageModel
     {
         private readonly TRAILES.Data.AppDbContext _context;
 
@@ -32,12 +32,17 @@ namespace TRAILES.Pages.Students
                 return NotFound();
             }
 
-            Student = await _context.Students.FindAsync(id);
+            Student = await _context.Students
+                .Include(c => c.Cabin)
+                .FirstOrDefaultAsync(c => c.Id == id);
+                //.FindAsync(id);
 
             if (Student == null)
             {
                 return NotFound();
             }
+
+            PopulateCabinsDropDownList(_context, Student.CabinID);
             return Page();
         }
 
@@ -45,7 +50,13 @@ namespace TRAILES.Pages.Students
         // more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync(string id)
         {
+            if (String.IsNullOrEmpty(id))
+            {
+                return NotFound();
+            }
+
             var StudentToUpdate = await _context.Students.FindAsync(id);
+
             if (StudentToUpdate == null)
             {
                 return NotFound();
@@ -59,7 +70,8 @@ namespace TRAILES.Pages.Students
                 s => s.Gender,
                 s => s.GradeLevel,
                 s => s.Registered,
-                s => s.Email
+                s => s.Email,
+                s => s.CabinID
             ))
             {
                 StudentToUpdate.UserName = StudentToUpdate.Email;
@@ -67,12 +79,8 @@ namespace TRAILES.Pages.Students
                 return RedirectToPage("./Index");
             }
 
+            PopulateCabinsDropDownList(_context, StudentToUpdate.CabinID);
             return Page();
-        }
-
-        private bool StudentExists(string id)
-        {
-            return _context.Students.Any(e => e.Id == id);
         }
     }
 }

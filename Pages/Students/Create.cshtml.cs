@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace TRAILES.Pages.Students
 {
     [Authorize(Policy = "RequireAdministratorRole")]
-    public class CreateModel : PageModel
+    public class CreateModel : CabinNamePageModel
     {
         private readonly TRAILES.Data.AppDbContext _context;
 
@@ -23,7 +23,7 @@ namespace TRAILES.Pages.Students
 
         public IActionResult OnGet()
         {
-        ViewData["CabinID"] = new SelectList(_context.Cabins, "CabinID", "CabinID");
+            ViewData["CabinID"] = new SelectList(_context.Cabins, "CabinID", "CabinID");
             return Page();
         }
 
