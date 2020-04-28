@@ -1,0 +1,68 @@
+@page
+@model TRAILES.Pages.Cabins.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Cabins</h1>
+
+<p>
+    @if(User.Identity.Name == "admin@bchstest.com")
+    {
+        <a asp-page="Create">Create New</a>
+    }   
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Cabin[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cabin[0].Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cabin[0].BedCount)
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.CountSort">
+                    @Html.DisplayNameFor(model => model.Cabin[0].BedsRegistered)
+                </a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cabin[0].Chapperone)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Cabin) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BedCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BedsRegistered)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Chapperone)
+            </td>
+            <td>
+                <a asp-page="./Details" asp-route-id="@item.CabinID" class="btn btn-primary">Details</a> 
+                @if(User.Identity.Name == "admin@bchstest.com")
+                {
+                    <a asp-page="./Edit" asp-route-id="@item.CabinID">| Edit</a> 
+                    <a asp-page="./Delete" asp-route-id="@item.CabinID">| Delete</a>
+                }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

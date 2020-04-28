@@ -1,19 +1,20 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TRAILES.Models
 {
     public class Cabin
     {
-        public int Id {get; set;}
-        public string Name {get; set;}
-
-        [Display(Name = "Date Added")]
-        [DataType(DataType.Date)]
-        public DateTime AddDate {get; set;}
-        public string Gender {get; set;}
+        public int CabinID { get; set; }
+        public string Name { get; set; }
+        public Gender Gender { get; set; }
         [Display(Name = "Bed Count")]
-        public int BedCount {get; set;}
+        public int BedCount { get; set; } = 9;
+        [Display(Name = "Beds Taken")]
+        public int BedsRegistered { get; set; } = 0;
+        public string Chapperone { get; set; } = "";
+
+        public ICollection<Student> Students;
     }
 }

@@ -1,0 +1,81 @@
+@page
+@model TRAILES.Pages.Students.IndexModel
+
+@{
+    ViewData["Title"] = "Students";
+}
+
+<h1>Students</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.NameSort">
+                    @Html.DisplayNameFor(model => model.Students[0].Lname)
+                </a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Students[0].Fname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Students[0].Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Students[0].GradeLevel)
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.RegisteredSort">
+                    @Html.DisplayNameFor(model => model.Students[0].Registered)
+                </a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Students[0].priorityRemaining)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Students[0].Cabin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Students[0].Email)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Students) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GradeLevel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Registered)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.priorityRemaining)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cabin.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NormalizedEmail)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
