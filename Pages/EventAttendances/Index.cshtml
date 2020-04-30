@@ -50,7 +50,8 @@
                 @Html.DisplayFor(modelItem => item.Event.EventID)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Student.Id)
+                @{var name = item.Student.Lname + ", " + item.Student.Fname;}
+                @Html.DisplayFor(modelItem => name)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.EventAttendanceID">Edit</a> |
