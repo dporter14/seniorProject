@@ -7,9 +7,12 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
+<div>
+    <form method="post">
+        <input type="hidden" />
+        <input type="submit" value="Schedule" class="btn btn-primary" />
+    </form>
+</div>
 <table class="table">
     <thead>
         <tr>
@@ -44,10 +47,11 @@
                 @Html.DisplayFor(modelItem => item.Weight)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Event.EventID)
+                @Html.DisplayFor(modelItem => item.Event.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Student.Id)
+                @{var name = item.Student.Lname + ", " + item.Student.Fname;}
+                @Html.DisplayFor(modelItem => name)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.EventAttendanceID">Edit</a> |
