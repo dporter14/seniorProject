@@ -27,7 +27,10 @@ namespace TRAILES.Pages.EventAttendances
         {
             EventAttendance = await _context.EventAttendances
                 .Include(e => e.Event)
-                .Include(e => e.Student).ToListAsync();
+                .Include(e => e.Student)
+                .OrderByDescending(a => a.Assigned)
+                .ThenBy(a => a.Event.StartTime)
+                .ToListAsync();
         }
 
         public class Lookup
@@ -38,16 +41,16 @@ namespace TRAILES.Pages.EventAttendances
             public double [] gradeWeights;
             public Lookup(int eventCount, int gradeCount = 4)
             {
-                priorityWeights = new double[eventCount];
-                gradeWeights = new double[gradeCount];
+                priorityWeights = new double[eventCount+1];
+                gradeWeights = new double[13];
                 for(int i = 1; i <= eventCount; i++)
                 {
-                    priorityWeights[i] = (eventCount-(i-1))/(eventCount+1);
+                    priorityWeights[i] = ((eventCount-(i-1d))/(eventCount+1d));
                 }
                 int j = 0;
-                for(int i = 12; i >= 12 - gradeCount; i--)
+                for(int i = 12; i > 12 - gradeCount; i--)
                 {
-                    gradeWeights[i] = (gradeCount-j)/(gradeCount+1);
+                    gradeWeights[i] = ((gradeCount-j)/(gradeCount+1d)); 
                     j++;
                 }
             }
@@ -56,21 +59,21 @@ namespace TRAILES.Pages.EventAttendances
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var attendances = await _context.EventAttendances.ToListAsync();
+            var attendances = _context.EventAttendances.Select(a => a);
             if (attendances.Count() == 0)
             {
                 return RedirectToPage("./Index");
             }
-            var events = await _context.Events.ToListAsync();
-            var students = await _context.Students.ToListAsync();
+            var events = _context.Events.Select(e => e);
+            var students = _context.Students.Select(s => s);
 
             Lookup LookupTable = new Lookup(events.Count());
             
             foreach (var evnt in events)
             {
                 var attends = attendances.Where(a => a.EventID == evnt.EventID)
-                                        .ToList();
-                var studs = attends.Select(s => s.Student).ToList();
+                                        .Select(a => a);
+                var studs = attends.Select(s => s.Student);
 
                 foreach (var record in attends)
                 {
@@ -81,13 +84,27 @@ namespace TRAILES.Pages.EventAttendances
                     var three = Math.Pow(LookupTable.gradeWeights[stud.GradeLevel], 2);
 
                     var wght = Math.Sqrt(one + two + three);
-                    record.Weight = wght;
+                    record.Weight = wght * 1000d;
                 }
 
-                attends.OrderBy(a => a.Weight);
-                int signed = 0;
+                var sortAtt = await attends.ToListAsync();
+                int n = sortAtt.Count();
 
-                foreach (var record in attends)
+                for(int i = 0; i < n - 1; i++)
+                {
+                    for (int j = 0; j < n - i - 1; j++)
+                    {
+                        if (sortAtt[j].Weight < sortAtt[j + 1].Weight)
+                        {
+                            EventAttendance temp = sortAtt[j];
+                            sortAtt[j] = sortAtt[j+1];
+                            sortAtt[j+1] = temp;
+                        }
+                    }
+                }
+
+                int signed = 0;
+                foreach (var record in sortAtt)
                 {
                     if(signed < evnt.MaxAttendance)
                     {
@@ -96,16 +113,13 @@ namespace TRAILES.Pages.EventAttendances
                     }
                     else
                     {
-                        foreach (var stu in students.Where(s => s.Id == record.StudentID))
+                        var stu = record.Student;
+                        if (stu.priorityRemaining > 1)
                         {
-                            if (stu.priorityRemaining > 1)
-                            {
-                                stu.priorityRemaining--;
-                            }
-                            _context.Update(stu);
+                            stu.priorityRemaining--;
                         }
+                        //_context.Update(stu);
                         record.Assigned = false;
-                        _context.Update(record);
                     }
                 }
 
